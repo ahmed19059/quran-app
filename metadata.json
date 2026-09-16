@@ -1,0 +1,6 @@
+{
+  "name": "القرآن الكريم",
+  "description": "تطبيق القرآن الكريم كامل مع أصوات أشهر القراء، الفهرس، التفسير، الأذكار، وعلامات الحفظ بتصميم عصري وسلس.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
