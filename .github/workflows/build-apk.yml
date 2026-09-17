@@ -17,18 +17,21 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Find and Build APK Automatically
+      - name: Install Gradle and Generate Wrapper
         run: |
-          echo "Searching for project files..."
-          GRADLEW_PATH=$(find . -name "gradlew" -print -quit)
-          if [ -z "$GRADLEW_PATH" ]; then
-            echo "Error: gradlew file not found!"
-            exit 1
-          fi
-          PROJECT_DIR=$(dirname "$GRADLEW_PATH")
-          echo "Project found at: $PROJECT_DIR"
+          echo "Installing system gradle to generate missing wrapper..."
+          sudo apt-get update
+          sudo apt-get install -y gradle
+          
+          PROJECT_DIR=$(dirname "$(find . -name "settings.gradle.kts" -print -quit)")
+          echo "Project directory: $PROJECT_DIR"
           cd "$PROJECT_DIR"
+          
+          echo "Generating gradlew..."
+          gradle wrapper
           chmod +x gradlew
+          
+          echo "Building APK..."
           ./gradlew assembleDebug
 
       - name: Upload APK Artifact
