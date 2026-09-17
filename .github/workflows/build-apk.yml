@@ -17,22 +17,21 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build APK Automatically
+      - name: Build APK with SDK Config
         run: |
-          sudo apt-get update && sudo apt-get install -y gradle
-          
           PROJECT_DIR=$(dirname "$(find . -name "settings.gradle.kts" -print -quit)")
           echo "Project directory: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           
+          # ربط المشروع بمكان أندرويد الجاهز على السيرفر
+          echo "sdk.dir=/usr/local/lib/android/sdk" > local.properties
+          
           if [ ! -f "gradlew" ]; then
-            echo "Generating Gradle wrapper..."
             gradle wrapper --gradle-version 8.5
           fi
           
           chmod +x gradlew
-          echo "Building APK..."
-          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
