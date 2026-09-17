@@ -17,11 +17,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Find Project and Build APK
+      - name: Build APK Automatically
         run: |
+          sudo apt-get update && sudo apt-get install -y gradle
+          
           PROJECT_DIR=$(dirname "$(find . -name "settings.gradle.kts" -print -quit)")
           echo "Project directory: $PROJECT_DIR"
           cd "$PROJECT_DIR"
