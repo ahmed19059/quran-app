@@ -17,9 +17,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Gradle and Generate Wrapper
+      - name: Install Gradle and Generate Modern Wrapper
         run: |
-          echo "Installing system gradle to generate missing wrapper..."
+          echo "Installing system gradle..."
           sudo apt-get update
           sudo apt-get install -y gradle
           
@@ -27,8 +27,8 @@ jobs:
           echo "Project directory: $PROJECT_DIR"
           cd "$PROJECT_DIR"
           
-          echo "Generating gradlew..."
-          gradle wrapper
+          echo "Generating modern Gradle wrapper version 8.5..."
+          gradle wrapper --gradle-version 8.5
           chmod +x gradlew
           
           echo "Building APK..."
